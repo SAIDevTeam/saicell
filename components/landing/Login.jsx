@@ -24,7 +24,7 @@ const LogIn = () => {
       const res = await getProviders();
       console.log(res);
       setProviders(res);
-      // console.log("ll"+session);
+      console.log("ll"+session);
       //   console.log(`lll=${process.env.GOOGLE_ID}`);
     })();
   }, []);
@@ -227,7 +227,7 @@ const LogIn = () => {
                       // submit();
                       signIn("google", {
                         redirect: false,
-                        callbackUrl: "http://localhost:3000/studentpage"
+                        callbackUrl: "https://saicell.vercel.app/studentpage"
                       });
 
                     }}
