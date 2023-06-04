@@ -17,7 +17,7 @@ const Nav = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
+      if (scrollTop > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);

@@ -6,12 +6,12 @@ import Image from 'next/image'
 const Hero = () => {
   return (
     // <div  className='gradient-01 h-[1200px]'>
-    <div className='gradient-01 flex flex-row  py-12'>
+    <div className='gradient-01  md:flex md:flex-row  py-12'>
       <Provider>
         <div className="basis-7/12">
       <Login/>
       </div>
-      <div className="basis-5/12 place-content-center my-24 ">
+      <div className="hidden md:flex basis-5/12 place-content-center my-24 ">
        <Image width={500} height={500} src="/landing/login.svg" />
        </div>
     

@@ -17,7 +17,9 @@ const LogIn = () => {
   const [providers, setProviders] = useState(null);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const submit = () => {};
+  const submit = () => {
+    router.push("/studentpage")
+  };
   useEffect(() => {
     (async () => {
       const res = await getProviders();
@@ -45,6 +47,42 @@ const LogIn = () => {
     validate: login_validate,
     onSubmit,
   });
+
+ 
+const[checked, setchecked]=useState({student_checked:"checked",
+student_opacity:"opacity-100",
+almuni_abled:"",
+almuni_opacity:"opacity-50",
+student_abled:"disabled",
+almuni_checked:"",
+
+
+})
+
+const onclickstudentalmunibutton=()=>{
+  if(checked.student_checked ==="checked"){
+    setchecked({
+      student_checked:"",
+student_opacity:"opacity-50",
+almuni_checked:"checked",
+almuni_opacity:"opacity-100",
+almuni_abled:"disabled",
+student_abled:"",
+    })
+  }
+  else{
+    setchecked({
+      student_checked:"checked",
+      student_opacity:"opacity-100",
+      almuni_abled:"",
+      almuni_opacity:"opacity-50",
+      student_abled:"disabled",
+      almuni_checked:"",
+    })
+  }
+  console.log("pppppp")
+}
+
   console.log(formik.errors);
 
   return (
@@ -57,19 +95,27 @@ const LogIn = () => {
           SignUp
         </Link>
       </div>
-      <div className="px-5">
-      <h1 className="font-inter text-left text-xl my-4">Login as</h1>
-      <div className="flex my-4 ">
-        <button className="flex-start  rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center">
-            Student
-        </button>
-        <button className="mx-2 rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center">
-            Almuni
-        </button>
-      </div>
-      </div>
+      
       <div className="bg-transparent  w-full rounded-lg divide-y divide-gray-200 ">
         <form className="px-5 py-5 " action="POST" onSubmit={formik.handleSubmit}>
+        <div className="pt-2">
+      <h1 className="font-inter text-left text-xl my-4">Login as</h1>
+      </div>
+        <div className="flex px-4 my-4 ">
+       
+        <button  onClick={onclickstudentalmunibutton} disabled={...checked.student_abled} className= {`flex-start ${checked.student_opacity} mr-5 rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-3 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center`}>
+           
+    <input onChange={onclickstudentalmunibutton}  id="default-radio-1" type="radio" checked={...checked.student_checked} name="default-radio" className=" w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            Student
+        </button>
+        <button onClick={onclickstudentalmunibutton}  disabled={...checked.almuni_abled} className= {`flex-start ${checked.almuni_opacity} rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-3 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center`}>
+           
+    <input onChange={onclickstudentalmunibutton} id="default-radio-1" type="radio" checked={...checked.almuni_checked} name="default-radio" className=" w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            Almuni
+        </button>
+       
+      </div>
+     
           <label className="font-semibold  text-sm text-gray-600 pb-3 block">
             E-mail
           </label>
@@ -167,7 +213,10 @@ const LogIn = () => {
                     type="button"
                     onClick={() => {
                       // submit();
-                      signIn("google");
+                      signIn("google",{
+                        redirect:false,
+                        callbackUrl:"http://localhost:3000/studentpage"
+                      });
                      
                     }}
                     // key={provider.name}
@@ -186,7 +235,7 @@ const LogIn = () => {
                     <button
                     type="button"
                     onClick={() => {
-                      // submit();
+                      submit();
                       signIn("github");
                      
                     }}
