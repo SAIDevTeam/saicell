@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import login_validate from "@lib/validate";
+import login_validate_student from "@lib/validate";
+import { login_validate_almuni } from "@lib/validate";
 import { TypingText } from "@constants";
 import { motion } from "framer-motion";
 import { navVariants } from "@motion/motion";
@@ -17,25 +18,68 @@ const LogIn = () => {
   const [providers, setProviders] = useState(null);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  const submit = () => {
-    router.push("/studentpage")
-  };
+ 
   useEffect(() => {
     (async () => {
       const res = await getProviders();
       console.log(res);
       setProviders(res);
       // console.log("ll"+session);
-    //   console.log(`lll=${process.env.GOOGLE_ID}`);
+      //   console.log(`lll=${process.env.GOOGLE_ID}`);
     })();
   }, []);
+
+
+
+  const [checked, setchecked] = useState({
+    student_checked: "checked",
+    student_opacity: "opacity-100",
+    almuni_abled: "",
+    almuni_opacity: "opacity-50",
+    student_abled: "disabled",
+    almuni_checked: "",
+    formikid:login_validate_student,
+   pageid:"/studentpage"
+
+
+  })
+
+  const onclickstudentalmunibutton = () => {
+    if (checked.student_checked === "checked") {
+      setchecked({
+        student_checked: "",
+        student_opacity: "opacity-50",
+        almuni_checked: "checked",
+        almuni_opacity: "opacity-100",
+        almuni_abled: "disabled",
+        student_abled: "",
+        formikid:login_validate_almuni,
+       
+        pageid:"/almunipage"
+      })
+    }
+    else {
+      setchecked({
+        student_checked: "checked",
+        student_opacity: "opacity-100",
+        almuni_abled: "",
+        almuni_opacity: "opacity-50",
+        student_abled: "disabled",
+        almuni_checked: "",
+        formikiden:login_validate_student,
+       
+        pageid:"/studentpage"
+      })
+    }
+    console.log("pppppp")
+  }
   const onSubmit = async (values) => {
     console.log(values);
-   const status= await signIn('credentials',{
-      redirect:false,
-      email:values.email,
-      password:values.password,
-      callbackUrl:"/"
+    const status = await signIn('credentials', {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+      callbackUrl: "/"
     })
     console.log(status);
   };
@@ -43,79 +87,47 @@ const LogIn = () => {
     initialValues: {
       email: "",
       password: "",
+    
     },
-    validate: login_validate,
+    validate: login_validate_student,
     onSubmit,
   });
 
- 
-const[checked, setchecked]=useState({student_checked:"checked",
-student_opacity:"opacity-100",
-almuni_abled:"",
-almuni_opacity:"opacity-50",
-student_abled:"disabled",
-almuni_checked:"",
-
-
-})
-
-const onclickstudentalmunibutton=()=>{
-  if(checked.student_checked ==="checked"){
-    setchecked({
-      student_checked:"",
-student_opacity:"opacity-50",
-almuni_checked:"checked",
-almuni_opacity:"opacity-100",
-almuni_abled:"disabled",
-student_abled:"",
-    })
-  }
-  else{
-    setchecked({
-      student_checked:"checked",
-      student_opacity:"opacity-100",
-      almuni_abled:"",
-      almuni_opacity:"opacity-50",
-      student_abled:"disabled",
-      almuni_checked:"",
-    })
-  }
-  console.log("pppppp")
-}
-
   console.log(formik.errors);
-
+  const submit = () => {
+    router.push(`${checked.pageid}`);
+  };
   return (
     <div className="px-10 py-16 xs:p-0 mx-auto bg-transparent md:w-full md:max-w-md">
-    <TextAnimation  text1="Welcome Back !"/>
-     
+      <TextAnimation text1="Welcome Back !" />
+
       <div className="text-left mt-2 ">
         Doesn't have an account?{" "}
         <Link className="inline-block text-cyan-500 ml-3 " href="/signup">
           SignUp
         </Link>
       </div>
-      
+
       <div className="bg-transparent  w-full rounded-lg divide-y divide-gray-200 ">
         <form className="px-5 py-5 " action="POST" onSubmit={formik.handleSubmit}>
-        <div className="pt-2">
-      <h1 className="font-inter text-left text-xl my-4">Login as</h1>
-      </div>
-        <div className="flex px-4 my-4 ">
-       
-        <button  onClick={onclickstudentalmunibutton} disabled={...checked.student_abled} className= {`flex-start ${checked.student_opacity} mr-5 rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-3 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center`}>
-           
-    <input onChange={onclickstudentalmunibutton}  id="default-radio-1" type="radio" checked={...checked.student_checked} name="default-radio" className=" w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-            Student
-        </button>
-        <button onClick={onclickstudentalmunibutton}  disabled={...checked.almuni_abled} className= {`flex-start ${checked.almuni_opacity} rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-3 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center`}>
-           
-    <input onChange={onclickstudentalmunibutton} id="default-radio-1" type="radio" checked={...checked.almuni_checked} name="default-radio" className=" w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-            Almuni
-        </button>
-       
-      </div>
-     
+          <div className="pt-2">
+            <h1 className="font-inter text-left text-xl my-4">Login as</h1>
+          </div>
+          <div className="flex px-4 my-4 ">
+
+            <button onClick={onclickstudentalmunibutton} disabled={...checked.student_abled} className={`flex-start ${checked.student_opacity} mr-5 rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-3 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center`}>
+
+              <input onChange={onclickstudentalmunibutton} id="default-radio-1" type="radio" checked={...checked.student_checked} name="default-radio" className=" w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              Student
+            </button>
+            <button onClick={onclickstudentalmunibutton} disabled={...checked.almuni_abled} className={`flex-start ${checked.almuni_opacity} rounded-full h-10 w-28 border border-blue-500 bg-blue-500 py-1.5 px-3 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center`}>
+
+              <input onChange={onclickstudentalmunibutton} id="default-radio-1" type="radio" checked={...checked.almuni_checked} name="default-radio" className=" w-4 h-4 mr-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              Almuni
+            </button>
+
+          </div>
+
           <label className="font-semibold  text-sm text-gray-600 pb-3 block">
             E-mail
           </label>
@@ -205,19 +217,19 @@ student_abled:"",
         <div className="py-2">
           <div className="px-4 gap-1">
             <div className="text-center sm:text-left whitespace-nowrap">
-              {providers && 
-            //  Object.values(providers).map((provider) => (
-                 
-                  (<>
-                    <button
+              {providers &&
+                //  Object.values(providers).map((provider) => (
+
+                (<>
+                  <button
                     type="button"
                     onClick={() => {
                       // submit();
-                      signIn("google",{
-                        redirect:false,
-                        callbackUrl:"http://localhost:3000/studentpage"
+                      signIn("google", {
+                        redirect: false,
+                        callbackUrl: "http://localhost:3000/studentpage"
                       });
-                     
+
                     }}
                     // key={provider.name}
                     className="black_btn my-2 w-full h-10 "
@@ -232,12 +244,12 @@ student_abled:"",
                       {`SignIn with google`}
                     </span>
                   </button>
-                    <button
+                  <button
                     type="button"
                     onClick={() => {
                       submit();
                       signIn("github");
-                     
+
                     }}
                     // key={provider.name}
                     className="black_btn my-2 w-full h-10 "
@@ -252,17 +264,17 @@ student_abled:"",
                       {`SignIn with github`}
                     </span>
                   </button>
-                 </>
-                 )
+                </>
+                )
                 //  
-                }
+              }
             </div>
             <div className="text-center sm:text-right whitespace-nowrap"></div>
           </div>
         </div>
       </div>
 
-     
+
     </div>
   );
 };
