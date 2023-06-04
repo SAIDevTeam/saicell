@@ -44,13 +44,13 @@ const Student_loginform = () => {
       password: "",
 
     },
-    validate: login_validate_student,
+    validate: login_validate_almuni,
     onSubmit,
   });
 
   console.log(formik.errors);
   const submit = () => {
-    router.push("/studentpage");
+    router.push("/almunipage");
   };
 
   return (

@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 export const navLinks = [
   {
     id: "Home",
-    title: "social-media",
+    title: "/",
   },
     {
-      id: "Help",
-      title: "/" ||"",
+      id: "Student",
+      title: "studentpage" ,
     },
     {
-      id: "Contuct Us",
-      title: "shop",
+      id: "Almuni",
+      title: "almunipage",
     },
     {
-      id: "SignUp",
-      title: "consaltency",
+      id: "Signup",
+      title: "signup",
     },
    
   ];

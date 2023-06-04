@@ -10,9 +10,9 @@ import { login_validate_almuni } from "@lib/validate";
 import { TypingText } from "@constants";
 import { motion } from "framer-motion";
 import { navVariants } from "@motion/motion";
-import TextAnimation from "./Textanimation";
-import Student_loginform from "./student_loginform";
-import Almuni_login from "./Almuni_login";
+import TextAnimation from "@components/landing/Textanimation";
+import Student_signup from "./Student_signup";
+import Almuni_signup from "./Almuni_signup";
 
 const LogIn = () => {
  
@@ -67,9 +67,9 @@ const LogIn = () => {
       <TextAnimation text1="Welcome Back !" />
 
       <div className="text-left mt-2 ">
-        Doesn't have an account?{" "}
-        <Link className="inline-block text-cyan-500 ml-3 " href="/signup">
-          SignUp
+        Already have an account?{" "}
+        <Link className="inline-block text-blue-500 ml-3 " href="/">
+          LogIn
         </Link>
       </div>
       <div className="pt-2">
@@ -90,9 +90,9 @@ const LogIn = () => {
 
       </div>
      {(checked.student_checked === "checked") ?<>
-     <Student_loginform/>
+     <Student_signup/>
      </>:<>
-     <Almuni_login/>
+    <Almuni_signup/>
      </>}
      
 
