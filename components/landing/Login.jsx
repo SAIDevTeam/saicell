@@ -227,7 +227,7 @@ const LogIn = () => {
                       // submit();
                       signIn("google", {
                         redirect: false,
-                        callbackUrl: "http://localhost:3000/studentpage"
+                        callbackUrl: "https://saicell.vercel.app/studentpage"
                       });
 
                     }}
