@@ -9,7 +9,8 @@ import Router from "next/router";
 import { useFormik } from "formik";
 import { signup_validate_student } from "@lib/validate";
 const SignUp = () => {
-  const [email, setemail] = useState("");
+  const [year, setyear] = useState("");
+  const[usercreation,setusercreation] = useState("");
   const [password, setpassword] = useState("");
   const [eye, seteye] = useState("password");
   const [show, setshow] = useState("/eyeclosed.svg");
@@ -31,8 +32,8 @@ for (let i = 2022; i > 1950; i--) {
     }
   };
   const onSubmit = async (values) => {
-    // const ress=JSON.stringify(values)
-    // console.log(ress);
+    const ress=JSON.stringify(values)
+    console.log(ress);
    
     try{const response = await fetch("/api/auth/signup",{
       method:"POST",
@@ -40,16 +41,22 @@ for (let i = 2022; i > 1950; i--) {
       body:JSON.stringify(({
         username:values.username,
         email:values.email,
-        password:values.password
+        password:values.password,
+        passing_yaer: year,
+        type:"almuni"
       }))
     })
     if(response.ok){
-      console.log("ll");
+      console.log(response);
     }else{
-      console.log(response)
+      if(response.status === 422)
+      {
+        setusercreation("This email already registered please signin")
+      }
     }}catch(err){
       console.log(err);
     }
+    console.log(year);
   };
   const formik = useFormik({
     initialValues: {
@@ -117,6 +124,14 @@ for (let i = 2022; i > 1950; i--) {
           ) : (
             <></>
           )}
+          {
+            (usercreation ?(
+              <span className="text-red-500 text-xl ">
+              {usercreation}
+            </span>
+            ):<>
+            </>)
+          }
           </div>
           <label
             className="font-semibold text-sm text-gray-600 pb-1 block"
@@ -125,8 +140,10 @@ for (let i = 2022; i > 1950; i--) {
             Passing Year
           </label>
           <select name="something"
-                className="border rounded-lg px-3 py-2  text-lg w-full  drop-shadow-md bg-white duration-300 hover:bg-blue-500 focus:bg-blue-500 focus:ring-0 text-white">
-               
+                className="border rounded-lg px-3 py-2  text-lg w-full  drop-shadow-md bg-white duration-300 hover:bg-blue-500 focus:bg-blue-500 focus:ring-0 text-slate-800"
+              onChange={(e) => {
+              setyear(e.target.value);
+            }}>
                {years.map(year => (
         <option>{year}</option>
       ))}

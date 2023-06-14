@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const TextAnimation = ({text1}) => {
+const TextAnimation = ({text1 ,textcolor ,textsize}) => {
   const text = `${text1}`;
   return (
     <motion.div className="text-2xl">
@@ -10,6 +10,7 @@ const TextAnimation = ({text1}) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2, delay: index * 0.1 }}
+          className={`${textcolor} ${textsize}`}
         >
           {letter}
         </motion.span>

@@ -18,7 +18,7 @@ const Student_loginform = () => {
   const [providers, setProviders] = useState(null);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
+  const [err, seterror] = useState("");
   useEffect(() => {
     (async () => {
       const res = await getProviders();
@@ -30,13 +30,30 @@ const Student_loginform = () => {
   }, []);
   const onSubmit = async (values) => {
     console.log(values);
-    const status = await signIn('credentials', {
-      redirect: false,
-      email: values.email,
-      password: values.password,
-      callbackUrl: "/"
-    })
-    console.log(status);
+    try {
+      const status = await signIn('credentials', {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+        callbackUrl: "/almunipage"
+      }
+
+      )
+      console.log(status);
+      if (status.error) {
+        seterror(status.error);
+      }
+      else {
+        router.push("/almunipage")
+      }
+
+    } catch (err) {
+      if (err.message === "422") {
+        console.log("Email not found")
+      }
+      console.log(err)
+    }
+
   };
   const formik = useFormik({
     initialValues: {
@@ -55,7 +72,7 @@ const Student_loginform = () => {
 
   return (
     <>
-        <div className="bg-transparent  w-full rounded-lg divide-y divide-gray-200 ">
+      <div className="bg-transparent  w-full rounded-lg divide-y divide-gray-200 ">
         <form className="px-5 py-5 " action="POST" onSubmit={formik.handleSubmit}>
 
 
@@ -78,6 +95,12 @@ const Student_loginform = () => {
             ) : (
               <></>
             )}
+            {((err === "422") ? (
+              <span className="text-red-500 text-sm ">
+                Email not Found
+              </span>
+            ) : <>
+            </>)}
           </div>
           <label className="font-semibold text-sm text-gray-600 pb-3 block">
             Password
@@ -97,6 +120,12 @@ const Student_loginform = () => {
             ) : (
               <></>
             )}
+            {((err === "404") ? (
+              <span className="text-red-500 text-sm ">
+                Password does not match
+              </span>
+            ) : <>
+            </>)}
           </div>
           <button
             type="submit"

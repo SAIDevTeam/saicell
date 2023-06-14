@@ -86,13 +86,13 @@ const handler = NextAuth({
     CredentialsProvider({
       name:"Credentions",
       async authorize(credentials,req){
-        try{
+        // try{
         connectToDB();
         console.log(credentials.email)
         const result = await User.findOne({email :credentials.email});
         console.log(result)
         if(!result || result.password === "000000"){
-          throw new Error("Email hot found" );
+          throw new Error("422" );
           return new Response( "No email found" ,{
             status: 402
             
@@ -102,13 +102,14 @@ const handler = NextAuth({
         const checkpassword = await compare(credentials.password ,result.password);
         console.log(checkpassword)
         if(!checkpassword || result.email !== credentials.email){
-          throw new Error("Email or Ppassword does not match");
+          throw new Error("404");
 
         }
         return result;
-      }catch(err){
-        console.log(err.message);
-      }
+      // }catch(err){
+      //   console.log(err.message);
+      //   return err.message;
+      // }
       }
     
      })
@@ -138,6 +139,8 @@ const handler = NextAuth({
             username: profile.name.replace(" ", "").toLowerCase(),
             image: profile.picture,
             password:"000000",
+            type:"student",
+            passing_year:"2300"
           });
         }
 
@@ -168,7 +171,7 @@ const handler = NextAuth({
 
       } catch (error) {
         console.log("Error checking if user exists: ", error.message);
-        return false
+        return error.message;
       }
     },
   },

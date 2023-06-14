@@ -27,7 +27,7 @@ export const POST = async(request)=>{
         //   });
           
         // }
-        const {username ,email ,password} = await request.json();
+        const {username ,email ,password ,passing_year, type} = await request.json();
         // console.log(email);
 //         // return new Response("llll", {
 //         //     status: 404
@@ -42,29 +42,33 @@ export const POST = async(request)=>{
             // return res.status(422).json({message :"User Already Exists"});
            
            
-            return new Response( "User Already exists",{
+            return new Response( "This email already registered",{
                 status: 422
                 
               });
         }
         
-        else if(checkexisting){
-        checkexisting.password = await hash(password,12)
+        else if(checkexisting&& checkexisting.password === "000000"){
+        checkexisting.password = await hash(password,12),
+        checkexisting.username = username,
+        checkexisting.type = type,
+        checkexisting.passing_year = passing_year
         await checkexisting.save();
-        return new Response( "User Already exists",{
-                status: 202
+        return new Response( "User Succesfully createdd",{
+                status: 200
                 
               });
         }
-
+        
 //         // {message :"User Already Exists"}
 
         User.create(
             {
                 username: username,
                 email :email,
-                password : await hash(password,12)
-
+                password : await hash(password,12),
+                passing_year:passing_year,
+                type:type
             
                 
                 })

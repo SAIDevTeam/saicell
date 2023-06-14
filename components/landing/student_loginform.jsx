@@ -18,31 +18,43 @@ const Student_loginform = () => {
   const [providers, setProviders] = useState(null);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [err, seterror] = useState("");
 
   useEffect(() => {
     (async () => {
       const res = await getProviders();
       console.log(res);
       setProviders(res);
-      console.log("ll" + session);
+      // console.log("ll" + session);
       //   console.log(`lll=${process.env.GOOGLE_ID}`);
     })();
   }, []);
   const onSubmit = async (values) => {
     console.log(values);
-    const status = await signIn('credentials', {
-      redirect: false,
-      email: values.email,
-      password: values.password,
-      callbackUrl: "/"
-    })
-    console.log(status);
+    try {
+      const status = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+        callbackUrl: "/studentpage",
+      });
+      console.log(status);
+      if (status.error) {
+        seterror(status.error);
+      } else {
+        router.push("/studentpage");
+      }
+    } catch (err) {
+      if (err.message === "422") {
+        console.log("Email not found");
+      }
+      console.log(err);
+    }
   };
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-
     },
     validate: login_validate_student,
     onSubmit,
@@ -55,11 +67,12 @@ const Student_loginform = () => {
 
   return (
     <>
-        <div className="bg-transparent  w-full rounded-lg divide-y divide-gray-200 ">
-        <form className="px-5 py-5 " action="POST" onSubmit={formik.handleSubmit}>
-
-
-
+      <div className="bg-transparent  w-full rounded-lg divide-y divide-gray-200 ">
+        <form
+          className="px-5 py-5 "
+          action="POST"
+          onSubmit={formik.handleSubmit}
+        >
           <label className="font-semibold  text-sm text-gray-600 pb-3 block">
             E-mail
           </label>
@@ -71,10 +84,15 @@ const Student_loginform = () => {
               placeholder="Enter email"
               {...formik.getFieldProps("email")}
             />
-            {(formik.errors.email && formik.touched.email) ? (
+            {formik.errors.email && formik.touched.email ? (
               <span className="text-red-500 text-[8px] ">
                 {formik.errors.email}
               </span>
+            ) : (
+              <></>
+            )}
+            {err === "422" ? (
+              <span className="text-red-500 text-sm ">Email not Found</span>
             ) : (
               <></>
             )}
@@ -90,9 +108,16 @@ const Student_loginform = () => {
               placeholder="Enter password"
               {...formik.getFieldProps("password")}
             />
-            {(formik.errors.password && formik.touched.password) ? (
+            {formik.errors.password && formik.touched.password ? (
               <span className="text-red-500 text-[8px] ">
                 {formik.errors.password}
+              </span>
+            ) : (
+              <></>
+            )}
+            {err === "404" ? (
+              <span className="text-red-500 text-sm ">
+                Password does not match
               </span>
             ) : (
               <></>
@@ -106,7 +131,7 @@ const Student_loginform = () => {
           </button>
           <div className="grid grid-cols-2 gap-1 mt-3">
             <div className="text-center sm:text-left whitespace-nowrap">
-              <button className="transition duration-200 mx-5 px-5 py-2 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
+             <Link href="/forget_password"> <button className="transition duration-200 mx-5 px-5 py-2 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -123,6 +148,7 @@ const Student_loginform = () => {
                 </svg>
                 <span className="inline-block ml-1">Forgot Password</span>
               </button>
+              </Link>
             </div>
             <div className="text-center sm:text-right whitespace-nowrap">
               <button className="transition duration-200 mx-5 px-5 py-2 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
@@ -149,56 +175,55 @@ const Student_loginform = () => {
         <div className="py-2">
           <div className="px-4 gap-1">
             <div className="text-center sm:text-left whitespace-nowrap">
-              {providers &&
-                //  Object.values(providers).map((provider) => (
+              {
+                providers && (
+                  //  Object.values(providers).map((provider) => (
 
-                (<>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      // submit();
-                      signIn("google", {
-                        redirect: false,
-                        callbackUrl: "https://saicell-dicc-git-main-saidevteam.vercel.app/studentpage"
-                      });
-
-                    }}
-                    // key={provider.name}
-                    className="black_btn my-2 w-full h-10 "
-                  >
-                    <span className="place-content-center mr-2 flex flex-row">
-                      <Image
-                        src="/landing/googlelogo.svg"
-                        width={20}
-                        height={20}
-                        className="mx-4"
-                      />{" "}
-                      {`SignIn with google`}
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      submit();
-                      signIn("github");
-
-                    }}
-                    // key={provider.name}
-                    className="black_btn my-2 w-full h-10 "
-                  >
-                    <span className="place-content-center mr-2 flex flex-row">
-                      <Image
-                        src="/landing/githublogo.svg"
-                        width={20}
-                        height={20}
-                        className="mx-4"
-                      />{" "}
-                      {`SignIn with github`}
-                    </span>
-                  </button>
-                </>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        // submit();
+                        signIn("google", {
+                          redirect: false,
+                          callbackUrl: "https://saicell-dicc-git-main-saidevteam.vercel.app/studentpage",
+                        });
+                      }}
+                      // key={provider.name}
+                      className="black_btn my-2 w-full h-10 "
+                    >
+                      <span className="place-content-center mr-2 flex flex-row">
+                        <Image
+                          src="/landing/googlelogo.svg"
+                          width={20}
+                          height={20}
+                          className="mx-4"
+                        />{" "}
+                        {`SignIn with google`}
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        submit();
+                        signIn("github");
+                      }}
+                      // key={provider.name}
+                      className="black_btn my-2 w-full h-10 "
+                    >
+                      <span className="place-content-center mr-2 flex flex-row">
+                        <Image
+                          src="/landing/githublogo.svg"
+                          width={20}
+                          height={20}
+                          className="mx-4"
+                        />{" "}
+                        {`SignIn with github`}
+                      </span>
+                    </button>
+                  </>
                 )
-                //  
+                //
               }
             </div>
             <div className="text-center sm:text-right whitespace-nowrap"></div>

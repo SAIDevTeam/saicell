@@ -8,12 +8,15 @@ import { IMAGES_MANIFEST } from "next/dist/shared/lib/constants";
 
 import { useFormik } from "formik";
 import { signup_validate_student } from "@lib/validate";
+import { useRouter } from "next/navigation";
 const SignUp = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const[usercreation,setusercreation] = useState("");
   const [eye, seteye] = useState("password");
   const [show, setshow] = useState("/eyeclosed.svg");
   const submit = () => {};
+  const router = useRouter();
   const icon = () => {
     if (eye == "password") {
       seteye("text");
@@ -36,13 +39,19 @@ const SignUp = () => {
       body:JSON.stringify(({
         username:values.username,
         email:values.email,
-        password:values.password
+        password:values.password,
+        passing_year:"2300",
+        type:"student"
       }))
     })
     if(response.ok){
-      console.log("ll");
+      console.log(response);
+      router.push("/studentpage")
     }else{
-      console.log(response)
+      if(response.status === 422)
+      {
+        setusercreation("This email already registered please signin")
+      }
     }}catch(err){
       console.log(err);
     }
@@ -77,7 +86,7 @@ const SignUp = () => {
           <input
             type="text"
             name="username"
-            className="border rounded-lg px-3 py-2 text-sm w-full"
+            className="border  rounded-lg px-3 py-2 text-sm w-full"
             placeholder="Enter name"
             {...formik.getFieldProps("username")}
           />
@@ -113,6 +122,12 @@ const SignUp = () => {
           ) : (
             <></>
           )}
+          {(usercreation ?(
+              <span className="text-red-500 text-xl ">
+              {usercreation}
+            </span>
+            ):<>
+            </>)}
           </div>
           <div className="flex flex-row ">
             <label
