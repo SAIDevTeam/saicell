@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Tech from "@components/Tech";
+
 import { BallCanvas } from "@components/canvas";
-import { technologies } from "@constants";
+
 const Productexplained = ({ handleClickOpen, data ,button1,buuton2 ,handleforproject}) => {
   console.log("55");
   console.log(data.skillexperience["JAVASCRIPT"]);

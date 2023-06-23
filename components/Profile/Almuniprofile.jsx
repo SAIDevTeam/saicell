@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 
-import Image from "next/image";
+
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";

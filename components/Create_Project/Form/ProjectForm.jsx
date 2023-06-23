@@ -1,22 +1,13 @@
 "use client";
 
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepButton from "@mui/material/StepButton";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { StepLabel } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
+
 
 import { devskills, technologies } from "@constants";
-import { useState } from "react";
+
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
-import Tech from "@components/Tech";
+
 
 const ProjectForm = ({
   onprice,

@@ -1,20 +1,6 @@
+"use client"
 import React from "react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-  ClipboardDocumentIcon,
-  ClipboardDocumentCheckIcon,
-  DocumentChartBarIcon,
-  DocumentMinusIcon,
-  TrashIcon,
-  PencilIcon,
-  DocumentIcon,
-} from "@heroicons/react/24/solid";
-import Button from '@mui/material/Button';
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";

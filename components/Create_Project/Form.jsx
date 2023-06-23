@@ -7,20 +7,15 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { StepLabel } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { devskills } from "@constants";
+
 import ProjectForm from "./Form/ProjectForm";
 import SkillForm from "./Form/SkillForm";
 import Finishform from "./Form/Finishform";
 
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
+
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+
 import Productexplained from "@components/Almuni/Productexplained";
 const steps = [
   "Enter project details",

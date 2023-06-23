@@ -1,11 +1,8 @@
 "use client";
 import * as React from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import { Box } from "@mui/material";
+
 import Image from "next/image";
-import { technologies } from "@constants";
-import { useState } from "react";
+
 const SkillForm = ({skills ,handleExperienceChange ,skillExperiences}) => {
   console.log(skills);
 
