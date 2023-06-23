@@ -188,7 +188,7 @@ const Student_loginform = () => {
                       // submit();
                       signIn("google", {
                         redirect: false,
-                        callbackUrl: "http://localhost:3000/almunipage"
+                        callbackUrl: "https://saicell-git-main-saidevteam.vercel.app/almunipage"
                       });
 
                     }}

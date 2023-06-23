@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -16,7 +15,7 @@ import { devskills } from "@constants";
 import ProjectForm from "./Form/ProjectForm";
 import SkillForm from "./Form/SkillForm";
 import Finishform from "./Form/Finishform";
-import { useSearchParams } from "react-router-dom";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
