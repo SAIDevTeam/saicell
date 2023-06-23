@@ -4,9 +4,9 @@ import { connectToDB } from "@utlis/db"
 
 import {hash} from 'bcryptjs'
 import express from "express"
-import { NextApiRequest, NextApiResponse } from 'next'
+
 // import { errorToJSON } from "next/dist/server/render"
-import { NextResponse } from "next/server"
+
 export const POST = async(request)=>{
     // connectToDB().catch(error =>{
     //     res.json({
@@ -37,7 +37,7 @@ export const POST = async(request)=>{
         const checkexisting = await User.findOne({email:email}).populate("email");
         // console.log(checkexisting.password)
         
-        
+        console.log(checkexisting)
         if(checkexisting && checkexisting.password !== "000000"){
             // return res.status(422).json({message :"User Already Exists"});
            

@@ -7,7 +7,7 @@ import Router from "next/router";
 
 
 import { useFormik } from "formik";
-import { signup_validate_student } from "@lib/validate";
+import { signup_validate_almuni, signup_validate_student } from "@lib/validate";
 const SignUp = () => {
   const [year, setyear] = useState("");
   const[usercreation,setusercreation] = useState("");
@@ -65,7 +65,7 @@ for (let i = 2022; i > 1950; i--) {
       password: "",
       conpassword: "",
     },
-    validate: signup_validate_student,
+    validate: signup_validate_almuni,
     onSubmit,
   });
   return(

@@ -32,7 +32,7 @@ const Nav = () => {
     variants={navVariants}
     initial="hidden"
     whileInView="show"
-      className={`sm:px-16 px-6 w-full flex items-center py-5 fixed top-0 z-20 ${scrolled ? "bg-blue-500" : "bg-transparent"
+      className={`sm:px-28 px-6 w-full flex items-center py-5 fixed top-0 z-20 ${scrolled ? "bg-sky-500" : "bg-transparent"
         }`}>
       <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
         <Link
@@ -44,17 +44,17 @@ const Nav = () => {
           }}
         >
           <img src='/landing/dj_logo.png' alt='logo' className='w-16 h-16 object-contain' />
-          <p className='text-white text-sm sm:text-[28px]  font-inter cursor-pointer flex '>
+          <p className=' text-sm sm:text-[28px]  font-inter cursor-pointer flex '>
             SAICELL &nbsp;
 
           </p>
         </Link>
-        <ul className='list-none hidden sm:flex flex-row gap-10'>
+        <ul className='list-none hidden sm:flex flex-row gap-10 mr-20'>
           {navLinks.map((nav) => (
             <li
               key={nav.id}
-              className={`${active === nav.title ? "text-white" : "text-secondary"
-                } hover:text-white text-[18px] font-medium cursor-pointer`}
+              className={`${active === nav.title ? "text-slate-900" : "text-slate-800"
+                } hover:text-slate-900 text-[18px] font-medium cursor-pointer`}
               onClick={() => setActive(nav.title)}
             >
               <Link href={`${nav.title}`}> {`${nav.id}`}</Link>

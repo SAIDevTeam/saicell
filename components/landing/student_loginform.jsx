@@ -186,7 +186,7 @@ const Student_loginform = () => {
                         // submit();
                         signIn("google", {
                           redirect: false,
-                          callbackUrl: "https://saicell-dicc-git-main-saidevteam.vercel.app/studentpage",
+                          callbackUrl: "https://saicell-dicc-git-main-saidevteam.vercel.app//studentpage",
                         });
                       }}
                       // key={provider.name}

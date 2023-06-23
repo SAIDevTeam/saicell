@@ -1,6 +1,6 @@
 
 
-import "styles/globals.css"
+import "styles/globals.scss"
 import { Inter } from 'next/font/google'
 import Provider from "@/components/Provider";
 import Nav from "@/components/Nav";
@@ -13,9 +13,9 @@ export const metadata = {
   description: 'GET',
 }
 
-const RootLayout = ({ children }) => (
+const RootLayout = ({ children ,opacity}) => (
   <html lang='en'>
-    <body className={inter.className}>
+    <body className={inter.className } style={{"opacity":`${opacity}`}}>
       
       <Provider>
         

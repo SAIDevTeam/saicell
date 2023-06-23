@@ -35,7 +35,7 @@ const Student_loginform = () => {
         redirect: false,
         email: values.email,
         password: values.password,
-        callbackUrl: "/almunipage"
+        callbackUrl: `/almunipage/${values.email}?email=${values.email}`
       }
 
       )
@@ -44,7 +44,7 @@ const Student_loginform = () => {
         seterror(status.error);
       }
       else {
-        router.push("/almunipage")
+        router.push(`/almunipage/${values.email}?email=${values.email}`)
       }
 
     } catch (err) {
@@ -188,7 +188,7 @@ const Student_loginform = () => {
                       // submit();
                       signIn("google", {
                         redirect: false,
-                        callbackUrl: "https://saicell-dicc-git-main-saidevteam.vercel.app/studentpage"
+                        callbackUrl: "http://localhost:3000/almunipage"
                       });
 
                     }}
